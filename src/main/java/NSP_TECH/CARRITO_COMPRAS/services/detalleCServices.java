@@ -33,4 +33,8 @@ public class detalleCServices {
     public DetalleCarrito guardarDetalle(DetalleCarrito carritoD) {
         return detallecrepository.save(carritoD);
     }
+
+    public List<DetalleCarrito> BuscarUnCarrito(Long ID_CARRITO) {
+    return detallecrepository.buscarPorIdCarrito(ID_CARRITO);
     }
+}

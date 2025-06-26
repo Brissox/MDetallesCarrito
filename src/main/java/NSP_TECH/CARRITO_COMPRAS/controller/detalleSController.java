@@ -151,4 +151,26 @@ public class detalleSController {
             }
 
 }
+
+// ENDPOINT PARA BUSCAR UN INVENTARIO POR ID CARRITO
+    @GetMapping("/Carrito/{id_carrito}")
+    @Operation(summary = "DETALLES POR CARRITO", description = "Operacion que lista los detalles por carrito")
+    @Parameters (value = {
+        @io.swagger.v3.oas.annotations.Parameter(name="id_carrito", description= "ID del carrito que se buscara", in = ParameterIn.PATH, required= true)
+
+    })
+    @ApiResponses (value = {
+        @ApiResponse(responseCode = "200", description = "Se lista correctamente el carrito ", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DetalleCarrito.class))),
+        @ApiResponse(responseCode = "404", description = "No se encontro ningun carrito", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "No se encuentran Datos")))
+    })
+        public ResponseEntity<?> buscarSucursal(@PathVariable Long id_carrito){
+        List<DetalleCarrito> carrito = dcservices.BuscarUnCarrito(id_carrito);
+        if (carrito.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentran datos");
+        } else {
+            return ResponseEntity.ok(assambler.toCollectionModel(carrito));
+        }
+    }
+
+
 }

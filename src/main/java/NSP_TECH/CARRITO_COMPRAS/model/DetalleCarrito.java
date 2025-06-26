@@ -26,19 +26,19 @@ public class DetalleCarrito {
     @Schema(description = "Identificador único del detalle del carrito", example = "11")
     private Long id_Detalle;
 
-    @Column(name = "ID_CARRITO")
+    @Column(name = "ID_CARRITO",nullable=false, precision=10)
     @Schema(description = "Identificador del carrito al que pertenece este detalle", example = "10")
     private Long id_carrito;
 
-    @Column(name = "ID_PRODUCTO")
+    @Column(name = "ID_PRODUCTO",nullable=false, precision=10)
     @Schema(description = "Identificador del producto agregado al carrito", example = "5")
     private Long id_producto;
 
-    @Column(name = "CANTIDAD")
+    @Column(name = "CANTIDAD",nullable=false, precision=10)
     @Schema(description = "Cantidad de unidades del producto en este detalle", example = "3")
-    private Integer cantidad;
+    private int cantidad;
 
-    @Column(name = "PRECIO_UNITARIO")
+    @Column(name = "PRECIO_UNITARIO",nullable=true, precision=10)
     @Schema(description = "Precio unitario del producto al momento de agregarlo al carrito", example = "19990")
     private int precio_unitario;
 
