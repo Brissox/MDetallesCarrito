@@ -1,16 +1,19 @@
 package NSP_TECH.CARRITO_COMPRAS.Services;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
 import NSP_TECH.CARRITO_COMPRAS.model.DetalleCarrito;
@@ -112,7 +115,41 @@ public class DCServicesTest {
         verify(dcRepository).deleteById(id);
 
     }
+    @Test
+    public void testEditarDetalleC(){
 
+        DetalleCarrito DCO = new DetalleCarrito();
+        DCO.setId_Detalle(11L);
+        DCO.setPrecio_unitario(1);
+        DCO.setCantidad(15);
+
+        DetalleCarrito DCE = new DetalleCarrito();
+        DCE.setId_Detalle(11L);
+        DCE.setPrecio_unitario(12);
+        DCE.setCantidad(153);
+
+        when(dcRepository.save(any(DetalleCarrito.class))).thenReturn(DCE);
+        when(dcRepository.existsById(11L)).thenReturn(true);
+        DetalleCarrito resultado = dcServices.guardarDetalle(DCE);
+
+        assertNotNull(resultado);
+        assertEquals(11L, resultado.getId_Detalle());
+        assertEquals(12, resultado.getPrecio_unitario());
+        assertEquals(153, resultado.getCantidad());
+
+        verify(dcRepository, times(1)).save(DCE);
+    }
+
+    @Test
+    public void testEliminarResena(){
+        Long id = 11L;
+        doNothing().when(dcRepository).deleteById(id);
+
+        dcServices.eliminarDetalle(11L);
+
+        verify(dcRepository, times(1)).deleteById(id);
+
+    }
     }
 
 
